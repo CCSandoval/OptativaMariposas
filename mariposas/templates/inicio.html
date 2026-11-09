@@ -11,8 +11,9 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {% for mariposa in mariposas %}
           <div class="bg-white p-4 rounded-lg shadow-md">
-            <img src="{{ mariposa.imagen.url }}" alt="{{ mariposa.comun }}" class="w-full h-64 object-cover rounded-t-lg mb-4">
-            <h2 class="text-xl font-semibold">{{ mariposa.comun|default:mariposa.cientifico|default:"Sin nombre" }}</h2>
+            <img src="{{ mariposa.imagen.url }}" alt="{{ mariposa.comun }}" class="w-full min-h-80 object-cover rounded-lg">
+            <p class="text-gray-600 text-xs mb-2"><em>{{ mariposa.atribucion }}</em></p>
+            <h2 class="text-xl font-semibold capitalize">{{ mariposa.comun|default:"-" }} <span class="text-gray-600 text-sm">({{ mariposa.cientifico }})</span></h2>
             <p class="text-gray-600">{{ mariposa.resumen|markdown }}</p>
           </div>
         {% endfor %}
