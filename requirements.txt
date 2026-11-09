@@ -1,0 +1,4 @@
+markdown
+tensorflow=2.20.0
+Pillow=13.0.0
+pandas=2.0.3

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Clasificación{% endblock %}
+
+{% block content %}
+  <h1 class="text-3xl font-bold mb-4">Clasificación</h1>
+  <p class="mb-4">Bienvenido a la página de clasificación de mariposas, empieza subiendo una imágen de una mariposa</p>
+  <p class="mb-4">Si quieres ver las mariposas que detectamos, haz clic <a href="{% url 'mariposas:inicio' %}" class="text-blue-500 hover:underline">aquí</a></p>
+
+  <div class="border border-gray-300 p-4 rounded-xl shadow-md bg-white">
+    {% if resultado %}
+      <h2 class="text-2xl font-bold mb-2">Resultado de la clasificación:</h2>
+      <p class="mb-4">{{ resultado }}</p>
+      <a href="{% url 'mariposas:clasificacion' %}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Volver a clasificar</a>
+    {% else %}
+      <form method="post" enctype="multipart/form-data" class="mb-4 flex flex-col">
+        {% csrf_token %}
+        <input type="file" name="imagen" class="mb-2">
+        <img id="preview" src="#" alt="Vista previa de la imagen" class="mb-2 hidden max-w-lg m-auto">
+        <div class="flex justify-center gap-4">
+          <button type="submit" id="submitBtn" disabled="false" class="disabled:opacity-50 disabled:pointer-events-none bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Subir Imagen</button>
+        </div>
+      </form>
+      <script>
+        const input = document.querySelector('input[type="file"]');
+        const preview = document.getElementById('preview');
+        const btn = document.getElementById('submitBtn');
+        input.addEventListener('change', function() {
+          const file = this.files[0];
+          if (file) {
+            btn.disabled = false;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              preview.src = e.target.result;
+              preview.classList.remove('hidden');
+            }
+            reader.readAsDataURL(file);
+          } else {
+            btn.disabled = true;
+            preview.classList.add('hidden');
+          }
+        });
+      </script>
+    {% endif %}
+  </div>
+{% endblock %}
